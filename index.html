@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Task Manager</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f0f4f8;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 750px;
+      margin: 40px auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 25px;
+    }
+    .stats {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    .stats div {
+      font-size: 18px;
+      font-weight: bold;
+    }
+    form {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      margin-bottom: 30px;
+    }
+    form input, form select, form button {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+    form input, form select {
+      flex: 1 1 30%;
+      min-width: 140px;
+    }
+    form button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    form button:hover {
+      background-color: #0056b3;
+    }
+    ul#taskList {
+      list-style: none;
+      padding: 0;
+    }
+    .task {
+      background: #fafafa;
+      border: 1px solid #ddd;
+      padding: 15px;
+      margin-bottom: 10px;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .completed span {
+      text-decoration: line-through;
+      color: #888;
+    }
+    .task .details {
+      flex: 1;
+    }
+    .priority-badge {
+      padding: 3px 8px;
+      border-radius: 5px;
+      font-size: 12px;
+      font-weight: bold;
+      color: white;
+      margin-left: 10px;
+    }
+    .priority-1 { background: #dc3545; } /* High */
+    .priority-2 { background: #ffc107; color: #333; } /* Medium */
+    .priority-3 { background: #28a745; } /* Low */
+    .task button {
+      margin-left: 5px;
+      padding: 6px 10px;
+      border: none;
+      border-radius: 4px;
+      font-size: 13px;
+      cursor: pointer;
+    }
+    .task .complete-btn { background-color: #28a745; color: white; }
+    .task .delete-btn { background-color: #dc3545; color: white; }
+    .empty-state {
+      text-align: center;
+      color: #888;
+      font-size: 16px;
+      margin-top: 30px;
+    }
+    .icon {
+      width: 20px;
+      height: 20px;
+      margin-right: 5px;
+      vertical-align: middle;
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 500px) {
+      form {
+        flex-direction: column;
+      }
+      form input, form select {
+        flex: 1 1 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>📝 Task Manager</h1>
+
+    <!-- Task Statistics -->
+    <div class="stats">
+      <div>Total Tasks: <span id="totalTasks">0</span></div>
+      <div>Completed: <span id="completedTasks">0</span></div>
+      <div>Pending: <span id="pendingTasks">0</span></div>
+    </div>
+
+    <!-- Task Filter and Sorting -->
+    <form id="filterForm">
+      <select id="categoryFilter" onchange="filterTasks()">
+        <option value="">All Categories</option>
+        <option value="1">High Priority</option>
+        <option value="2">Medium Priority</option>
+        <option value="3">Low Priority</option>
+      </select>
+      <button type="button" onclick="toggleSort()">Toggle Sort by Deadline</button>
+    </form>
+
+    <!-- Add Task Form -->
+    <form id="taskForm">
+      <input type="text" name="title" placeholder="Task title" required />
+      <input type="date" name="deadline" required />
+      <input type="time" name="time" required />
+      <select name="priority" required>
+        <option value="1">High Priority</option>
+        <option value="2">Medium Priority</option>
+        <option value="3">Low Priority</option>
+      </select>
+      <button type="submit">Add Task</button>
+    </form>
+
+    <!-- Task List -->
+    <ul id="taskList"></ul>
+
+    <!-- Empty State Message -->
+    <div class="empty-state" id="emptyState" style="display: none;">
+      No tasks available. Add a new task to get started!
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
